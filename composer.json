@@ -1,0 +1,46 @@
+{
+  "name": "laravel-pulse/sluggish",
+  "description": "A complete solution for generating slug, uuid and unique number for any laravel projects.",
+  "type": "library",
+  "homepage": "https://github.com/laravel-pulse/sluggish",
+  "keywords": [
+    "sluggish",
+    "laravel-pulse-sluggish",
+    "unique-slug-helper",
+    "laravel-slug-helper",
+    "slug-generator",
+    "unique-slug-generator",
+    "laravel-unique-slug-generator"
+  ],
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "LaravelPulse\\Sluggish\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "LaravelPulse\\Sluggish\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Akramul Hoque",
+      "email": "akramulhoque.engineer@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.0|^7.3"
+  },
+  "require-dev": {},
+  "extra": {
+    "laravel": {
+      "providers": [
+        "LaravelPulse\\Sluggish\\SluggishServiceProvider"
+      ],
+      "aliases": {
+        "Sluggish": "LaravelPulse\\Sluggish\\Facades\\SluggishFacade"
+      }
+    }
+  }
+}
