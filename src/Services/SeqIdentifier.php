@@ -2,10 +2,7 @@
 
 namespace LaravelPulse\Sluggish\Services;
 
-use Illuminate\Support\Str;
 use LaravelPulse\Sluggish\Interfaces\SluggishInterface;
-use LaravelPulse\Sluggish\Traits\CheckParameterValidation;
-use LaravelPulse\Sluggish\Traits\GetUniqueValue;
 
 class SeqIdentifier implements SluggishInterface
 {
@@ -15,30 +12,52 @@ class SeqIdentifier implements SluggishInterface
      * @param string $parameter
      * @param mixed $model
      * @param string $modelField
-     * @param int $id
+     * @param int $value
      * @return string
-     * @throws \Exception
      */
-    public function generate($parameter, $model, $modelField, $id): string
+    public function generate($parameter, $model, $modelField, $value): string
     {
-        return SeqIdentifier::SequentialIndex($parameter, $model, $modelField, $id);
+        return SeqIdentifier::SequentialIndex($parameter, $model, $modelField, $value);
     }
 
-    public static function SequentialIndex($parameter = 'SH', $model, $modelField, $length = 3)
+    /**
+     * Generate a unique slug for a given input parameter and ID.
+     *
+     * @param string $parameter
+     * @param mixed $model
+     * @param string $modelField
+     * @param string $value
+     * @return string
+     */
+    public static function SequentialIndex($parameter = 'SH-', $model, $modelField, $length)
     {
-        $previousLength = $length;
+        $length > 0 ? $previousLength = $length
+            : $previousLength = config('sluggish.default_value');
+
+        $lastNumber = ''; // initial starting
 
         $lastRecord = $model::orderBy('id', 'desc')->first();
 
-        if (!$lastRecord) {
-            $lastNumber = ''; // initial starting
+        if ($lastRecord) {
+            $lastRecordId = ((int) substr($lastRecord->$modelField, strlen($parameter)) / 1) * 1;
+            $lastNumberLength = strlen($lastRecordId + 1);
+            $previousLength = $length - $lastNumberLength;
+            $lastNumber = $lastRecordId + 1;
         }
 
-        $lastRecordId = ((int) substr($lastRecord->$modelField, strlen($parameter)) / 1) * 1;
-        $lastNumberLength = strlen($lastRecordId + 1);
-        $previousLength = $length - $lastNumberLength;
-        $lastNumber = $lastRecordId + 1;
+        return (new SeqIdentifier())->calculate($parameter, $previousLength, $lastNumber);
+    }
 
+    /**
+     * Generate a unique slug for a given input parameter and ID.
+     *
+     * @param string $parameter
+     * @param mixed $model
+     * @param int $lastNumber
+     * @return string
+     */
+    protected function calculate($parameter, $previousLength, $lastNumber): string
+    {
         $zeros = ""; // default separator configured
         for ($i = 0; $i < $previousLength; $i++) {
             $zeros .= "0";

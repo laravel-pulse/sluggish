@@ -9,4 +9,7 @@ return [
 
     // The maximum number of attempts to generate a unique slug. If a generated slug already exists, a new attempt will be made up to the specified limit.
     'max-attempts' => 100,
+
+    // The default value to be used if no value is provided.
+    'default-value' =>  '4',
 ];
