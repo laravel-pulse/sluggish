@@ -32,7 +32,7 @@ class SeqIdentifier implements SluggishInterface
     public static function SequentialIndex($parameter = 'SH-', $model, $modelField, $length)
     {
         $length > 0 ? $previousLength = $length
-            : $previousLength = config('sluggish.default_value');
+            : $previousLength = config('sluggish.default-value');
 
         $lastNumber = ''; // initial starting
 
