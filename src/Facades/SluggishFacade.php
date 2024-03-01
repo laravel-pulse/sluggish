@@ -13,6 +13,6 @@ class SluggishFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'Sluggish';
+        return 'sluggish';
     }
 }

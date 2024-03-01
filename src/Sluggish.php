@@ -8,7 +8,7 @@ use LaravelPulse\Sluggish\Services\Uuid;
 
 class Sluggish
 {
-    public static function generate($type = 'slug', $parameter, $model = null, $modelField = null, $id = null): string
+    public static function generate($type = 'slug', $parameter, $model = null, $modelField = null, $id = '0'): string
     {
         $generator = null;
 
