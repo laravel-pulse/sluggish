@@ -8,11 +8,11 @@ trait CheckParameterValidation
     {
         $errors = [];
 
-        empty($parameter) ? $errors[] = 'Title is not specified'
+        empty($parameter) ? $errors[] = throw new \InvalidArgumentException("Unsupported parameter: $parameter")
             : $parameter;
-        empty($model)  ? $errors[] = 'Model class is not specified'
+        empty($model)  ? $errors[] = throw new \InvalidArgumentException("Unsupported model: $model")
             : $model;
-        empty($modelField) ? $errors[] = 'Model field not specified'
+        empty($modelField) ? $errors[] = throw new \InvalidArgumentException("Unsupported type: $modelField")
             : $modelField;
 
         // If there are errors, return them as a string
