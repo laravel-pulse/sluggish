@@ -4,8 +4,8 @@ Sluggish is a laravel library package for generating unique slug, custom slug, u
 
 ## Requirements
 
-PHP version : 7.4 or higher
-Laravel version : 8 or higher
+PHP version : 8.0 or higher
+Laravel version : 8, 9, 10, 11 (capable with those versions)
 
 ## Installation
 
@@ -49,9 +49,36 @@ return [
 
 ### For example Controllers, Models, Traits, Commands, jobs, etc.
 
+## What or Which properties Sluggish want
+
+### Sluggish want 4 mandatory parameters in order to generate a unique slug or UUID or Sequence number
+
+#### 1. `string $type` - This parameter should contain what do you want to generate from Sluggish. It could be a string. Sluggish accept only three types one is "slug", "uuid" and "sequence".
+
+#### 2. `string $parameter` - This parameter should contain what or which string or input should convert into a slug / uuid / sequence number. like "Hello world" or $request->title or your custom field.
+
+#### 3. `object $model` - This parameter should contain the Model. Sluggish will execute the query and return the corresponding unique slug / uuid / sequence number. you can use any of your model like User::class, Post::class so on.
+
+#### 4. `string $modelField` - This parameter should contain the corresponding Model field which you want to keep Unique. It could be any of your custom field. You can use any of your custom field like "slug", "username", "unique_id", or "unique_key".
+
+### If you want to update any of your custom fields records just pass the id. Sluggish will also accept the id field.
+
+#### you need to pass in this order otherwise Sluggish can through an error
+
+```bash
+//  First Parameter : Model Class Name (String)
+//  Second Parameter: Field name from which the slug should be generated (String).
+//  Third Parameter : Model::class
+//  Fourth Parameter: ModelField name that contains the data for generated the slug.
+// Fifth Parameter: ID of any record. it is used for updating any existing record
+
+
+Sluggish::generate($type, $parameter, $model, $modelField, $id = optional);
+```
+
 ### Generate Slug
 
-```python
+```bash
 use LaravelPulse\Sluggish\Sluggish;
 
 // create slug
@@ -180,7 +207,6 @@ without any parameter you can get an exception
 ```bash
 // if any parameter is not specified
 // if given parameter is unordered
-return Sluggish::generateSlug("hello world");
 ```
 
 ## Contributing
